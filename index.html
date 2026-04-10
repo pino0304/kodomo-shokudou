@@ -1,0 +1,1410 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>あいの芽 | みんなで食べよう</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700&family=Kaisei+Decol:wght@400;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --orange: #F97316;
+    --orange-light: #FFF7ED;
+    --orange-dark: #C2410C;
+    --yellow: #FCD34D;
+    --green: #4ADE80;
+    --green-dark: #16A34A;
+    --sky: #38BDF8;
+    --sky-light: #F0F9FF;
+    --red: #F87171;
+    --text: #1C1917;
+    --text-muted: #78716C;
+    --bg: #FFFBF5;
+    --card-bg: #FFFFFF;
+    --border: rgba(0,0,0,0.08);
+    --radius: 20px;
+    --radius-sm: 12px;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: 'Noto Sans JP', sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    line-height: 1.7;
+    overflow-x: hidden;
+  }
+
+  /* ===== HEADER ===== */
+  header {
+    background: var(--card-bg);
+    border-bottom: 2px solid var(--orange-light);
+    padding: 0 24px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    height: 64px;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    box-shadow: 0 2px 16px rgba(249,115,22,0.08);
+  }
+
+  .logo {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+
+  .logo-icon {
+    width: 40px;
+    height: 40px;
+    background: var(--orange);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 20px;
+    box-shadow: 0 2px 8px rgba(249,115,22,0.4);
+  }
+
+  .logo-text {
+    font-family: 'Kaisei Decol', serif;
+    font-size: 20px;
+    font-weight: 700;
+    color: var(--orange-dark);
+    letter-spacing: 0.02em;
+  }
+
+  nav {
+    display: flex;
+    gap: 4px;
+  }
+
+  nav a {
+    text-decoration: none;
+    color: var(--text-muted);
+    font-size: 14px;
+    font-weight: 500;
+    padding: 8px 14px;
+    border-radius: 100px;
+    transition: all 0.2s;
+  }
+
+  nav a:hover {
+    background: var(--orange-light);
+    color: var(--orange-dark);
+  }
+
+  .hamburger {
+    display: none;
+    flex-direction: column;
+    gap: 5px;
+    cursor: pointer;
+    padding: 8px;
+  }
+
+  .hamburger span {
+    width: 24px;
+    height: 2px;
+    background: var(--text);
+    border-radius: 2px;
+    transition: all 0.3s;
+  }
+
+  /* ===== HERO ===== */
+  .hero {
+    position: relative;
+    padding: 80px 24px 60px;
+    text-align: center;
+    overflow: hidden;
+    background: linear-gradient(160deg, #FFF7ED 0%, #FFFBF5 50%, #F0F9FF 100%);
+  }
+
+  .hero-bubbles {
+    position: absolute;
+    top: 0; left: 0; right: 0; bottom: 0;
+    pointer-events: none;
+  }
+
+  .bubble {
+    position: absolute;
+    border-radius: 50%;
+    opacity: 0.15;
+    animation: float 6s ease-in-out infinite;
+  }
+
+  .bubble:nth-child(1) { width:120px; height:120px; background:var(--orange); top:10%; left:5%; animation-delay:0s; }
+  .bubble:nth-child(2) { width:80px; height:80px; background:var(--yellow); top:20%; right:8%; animation-delay:1s; }
+  .bubble:nth-child(3) { width:60px; height:60px; background:var(--green); bottom:20%; left:12%; animation-delay:2s; }
+  .bubble:nth-child(4) { width:100px; height:100px; background:var(--sky); bottom:15%; right:5%; animation-delay:0.5s; }
+
+  @keyframes float {
+    0%, 100% { transform: translateY(0) rotate(0deg); }
+    50% { transform: translateY(-20px) rotate(10deg); }
+  }
+
+  .hero-badge {
+    display: inline-block;
+    background: var(--orange-light);
+    color: var(--orange-dark);
+    font-size: 13px;
+    font-weight: 700;
+    padding: 6px 20px;
+    border-radius: 100px;
+    border: 1.5px solid rgba(249,115,22,0.3);
+    margin-bottom: 24px;
+    letter-spacing: 0.05em;
+  }
+
+  .hero h1 {
+    font-family: 'Kaisei Decol', serif;
+    font-size: clamp(36px, 8vw, 72px);
+    font-weight: 700;
+    color: var(--orange-dark);
+    line-height: 1.2;
+    margin-bottom: 16px;
+    position: relative;
+  }
+
+  .hero h1 .accent {
+    color: var(--orange);
+    position: relative;
+    display: inline-block;
+  }
+
+  .hero h1 .accent::after {
+    content: '';
+    position: absolute;
+    bottom: -4px;
+    left: 0;
+    right: 0;
+    height: 4px;
+    background: var(--yellow);
+    border-radius: 2px;
+  }
+
+  .hero p {
+    font-size: clamp(15px, 3vw, 18px);
+    color: var(--text-muted);
+    max-width: 480px;
+    margin: 0 auto 40px;
+  }
+
+  /* ===== NEXT EVENT ===== */
+  .next-event-section {
+    padding: 20px 24px 60px;
+    max-width: 900px;
+    margin: 0 auto;
+  }
+
+  .next-event-card {
+    background: var(--orange);
+    border-radius: 28px;
+    padding: 36px 40px;
+    display: grid;
+    grid-template-columns: 1fr auto;
+    align-items: center;
+    gap: 24px;
+    box-shadow: 0 12px 40px rgba(249,115,22,0.3);
+    position: relative;
+    overflow: hidden;
+    animation: slideUp 0.6s ease-out;
+  }
+
+  @keyframes slideUp {
+    from { opacity: 0; transform: translateY(30px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  .next-event-card::before {
+    content: '';
+    position: absolute;
+    top: -40px; right: -40px;
+    width: 200px; height: 200px;
+    background: rgba(255,255,255,0.1);
+    border-radius: 50%;
+  }
+
+  .next-event-card::after {
+    content: '';
+    position: absolute;
+    bottom: -60px; right: 60px;
+    width: 150px; height: 150px;
+    background: rgba(255,255,255,0.07);
+    border-radius: 50%;
+  }
+
+  .event-label {
+    font-size: 13px;
+    font-weight: 700;
+    color: rgba(255,255,255,0.8);
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    margin-bottom: 8px;
+  }
+
+  .event-date-main {
+    font-family: 'Kaisei Decol', serif;
+    font-size: clamp(28px, 5vw, 44px);
+    font-weight: 700;
+    color: #fff;
+    line-height: 1.2;
+    margin-bottom: 12px;
+  }
+
+  .event-details {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+    margin-top: 16px;
+  }
+
+  .event-chip {
+    background: rgba(255,255,255,0.2);
+    color: #fff;
+    font-size: 14px;
+    font-weight: 500;
+    padding: 6px 16px;
+    border-radius: 100px;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    backdrop-filter: blur(4px);
+  }
+
+  .countdown-box {
+    text-align: center;
+    position: relative;
+    z-index: 1;
+  }
+
+  .countdown-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 8px;
+  }
+
+  .countdown-item {
+    background: rgba(255,255,255,0.2);
+    border-radius: 12px;
+    padding: 10px 8px;
+    min-width: 60px;
+    backdrop-filter: blur(4px);
+  }
+
+  .countdown-num {
+    font-family: 'Kaisei Decol', serif;
+    font-size: 28px;
+    font-weight: 700;
+    color: #fff;
+    line-height: 1;
+  }
+
+  .countdown-unit {
+    font-size: 11px;
+    color: rgba(255,255,255,0.8);
+    margin-top: 4px;
+  }
+
+  /* ===== SECTION COMMON ===== */
+  .section {
+    padding: 60px 24px;
+    max-width: 900px;
+    margin: 0 auto;
+  }
+
+  .section-header {
+    text-align: center;
+    margin-bottom: 40px;
+  }
+
+  .section-tag {
+    display: inline-block;
+    background: var(--orange-light);
+    color: var(--orange-dark);
+    font-size: 12px;
+    font-weight: 700;
+    padding: 4px 16px;
+    border-radius: 100px;
+    letter-spacing: 0.08em;
+    margin-bottom: 12px;
+  }
+
+  .section-title {
+    font-family: 'Kaisei Decol', serif;
+    font-size: clamp(24px, 5vw, 36px);
+    font-weight: 700;
+    color: var(--text);
+    position: relative;
+    display: inline-block;
+  }
+
+  /* ===== NEWS ===== */
+  .news-section {
+    background: var(--card-bg);
+    padding: 60px 0;
+  }
+
+  .news-inner {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 0 24px;
+  }
+
+  .news-list {
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+    border: 1.5px solid var(--border);
+    border-radius: var(--radius);
+    overflow: hidden;
+  }
+
+  .news-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 20px;
+    padding: 20px 28px;
+    border-bottom: 1px solid var(--border);
+    transition: background 0.2s;
+    cursor: pointer;
+  }
+
+  .news-item:last-child { border-bottom: none; }
+  .news-item:hover { background: var(--orange-light); }
+
+  .news-date {
+    font-size: 13px;
+    color: var(--text-muted);
+    white-space: nowrap;
+    padding-top: 2px;
+    min-width: 80px;
+  }
+
+  .news-badge {
+    font-size: 11px;
+    font-weight: 700;
+    padding: 3px 10px;
+    border-radius: 100px;
+    white-space: nowrap;
+    flex-shrink: 0;
+  }
+
+  .badge-new { background: #FEF3C7; color: #92400E; }
+  .badge-event { background: #D1FAE5; color: #065F46; }
+  .badge-info { background: #DBEAFE; color: #1E40AF; }
+
+  .news-text {
+    font-size: 15px;
+    color: var(--text);
+    line-height: 1.6;
+  }
+
+  /* ===== GALLERY ===== */
+  .gallery-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 12px;
+  }
+
+  .gallery-item {
+    border-radius: var(--radius-sm);
+    overflow: hidden;
+    aspect-ratio: 1;
+    background: var(--orange-light);
+    position: relative;
+    cursor: pointer;
+    transition: transform 0.3s;
+  }
+
+  .gallery-item:hover { transform: scale(1.03); }
+  .gallery-item:nth-child(1) { grid-column: span 2; aspect-ratio: 2/1; }
+
+  .gallery-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+  }
+
+  .gallery-placeholder {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    color: var(--orange-dark);
+  }
+
+  .gallery-placeholder .icon { font-size: 40px; }
+  .gallery-placeholder .label { font-size: 13px; font-weight: 500; }
+
+  .gallery-overlay {
+    position: absolute;
+    inset: 0;
+    background: rgba(0,0,0,0);
+    transition: background 0.3s;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .gallery-item:hover .gallery-overlay {
+    background: rgba(0,0,0,0.15);
+  }
+
+  /* ===== INFO CARDS ===== */
+  .info-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 16px;
+  }
+
+  .info-card {
+    background: var(--card-bg);
+    border: 1.5px solid var(--border);
+    border-radius: var(--radius);
+    padding: 28px 24px;
+    text-align: center;
+    transition: all 0.3s;
+  }
+
+  .info-card:hover {
+    border-color: var(--orange);
+    box-shadow: 0 8px 24px rgba(249,115,22,0.12);
+    transform: translateY(-4px);
+  }
+
+  .info-icon {
+    font-size: 36px;
+    margin-bottom: 12px;
+    display: block;
+  }
+
+  .info-card h3 {
+    font-size: 15px;
+    font-weight: 700;
+    color: var(--orange-dark);
+    margin-bottom: 8px;
+  }
+
+  .info-card p {
+    font-size: 14px;
+    color: var(--text-muted);
+    line-height: 1.6;
+  }
+
+  /* ===== VOLUNTEER ===== */
+  .volunteer-section {
+    background: linear-gradient(135deg, var(--sky-light) 0%, #ECFDF5 100%);
+    padding: 60px 24px;
+  }
+
+  .volunteer-inner {
+    max-width: 900px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 40px;
+    align-items: center;
+  }
+
+  .volunteer-content h2 {
+    font-family: 'Kaisei Decol', serif;
+    font-size: 28px;
+    font-weight: 700;
+    margin-bottom: 16px;
+    color: var(--green-dark);
+  }
+
+  .volunteer-content p {
+    color: var(--text-muted);
+    font-size: 15px;
+    margin-bottom: 24px;
+  }
+
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 14px 28px;
+    border-radius: 100px;
+    font-size: 15px;
+    font-weight: 700;
+    text-decoration: none;
+    border: none;
+    cursor: pointer;
+    transition: all 0.2s;
+  }
+
+  .btn-primary {
+    background: var(--orange);
+    color: #fff;
+    box-shadow: 0 4px 16px rgba(249,115,22,0.3);
+  }
+
+  .btn-primary:hover {
+    background: var(--orange-dark);
+    transform: translateY(-2px);
+    box-shadow: 0 8px 24px rgba(249,115,22,0.4);
+  }
+
+  .btn-secondary {
+    background: transparent;
+    color: var(--green-dark);
+    border: 2px solid var(--green-dark);
+  }
+
+  .btn-secondary:hover {
+    background: var(--green-dark);
+    color: #fff;
+  }
+
+  .volunteer-visual {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+  }
+
+  .vol-stat {
+    background: #fff;
+    border-radius: var(--radius-sm);
+    padding: 20px;
+    text-align: center;
+    border: 1.5px solid var(--border);
+  }
+
+  .vol-stat-num {
+    font-family: 'Kaisei Decol', serif;
+    font-size: 32px;
+    font-weight: 700;
+    color: var(--green-dark);
+  }
+
+  .vol-stat-label {
+    font-size: 13px;
+    color: var(--text-muted);
+    margin-top: 4px;
+  }
+
+  /* ===== FOOTER ===== */
+  footer {
+    background: #1C1917;
+    color: rgba(255,255,255,0.7);
+    padding: 48px 24px 32px;
+  }
+
+  .footer-inner {
+    max-width: 900px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: 2fr 1fr 1fr;
+    gap: 40px;
+    margin-bottom: 40px;
+  }
+
+  .footer-brand .logo-text {
+    color: #fff;
+    font-size: 22px;
+    margin-bottom: 12px;
+    display: block;
+  }
+
+  .footer-brand p {
+    font-size: 14px;
+    line-height: 1.7;
+  }
+
+  .footer-col h4 {
+    color: #fff;
+    font-size: 14px;
+    font-weight: 700;
+    margin-bottom: 16px;
+    letter-spacing: 0.05em;
+  }
+
+  .footer-col a {
+    display: block;
+    color: rgba(255,255,255,0.6);
+    text-decoration: none;
+    font-size: 14px;
+    padding: 4px 0;
+    transition: color 0.2s;
+  }
+
+  .footer-col a:hover { color: var(--orange); }
+
+  .footer-bottom {
+    max-width: 900px;
+    margin: 0 auto;
+    border-top: 1px solid rgba(255,255,255,0.1);
+    padding-top: 24px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 13px;
+  }
+
+  /* ===== SPONSORS ===== */
+  .sponsors-section {
+    background: var(--card-bg);
+    padding: 60px 0;
+  }
+
+  .section-inner {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 0 24px;
+  }
+
+  .sponsor-grid {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 16px;
+    justify-content: center;
+  }
+
+  .sponsor-card {
+    background: var(--bg);
+    border: 1.5px solid var(--border);
+    border-radius: var(--radius);
+    padding: 24px 28px;
+    text-align: center;
+    width: 180px;
+    transition: all 0.25s;
+  }
+
+  .sponsor-card:not(.sponsor-add):hover {
+    border-color: var(--orange);
+    box-shadow: 0 8px 24px rgba(249,115,22,0.1);
+    transform: translateY(-4px);
+  }
+
+  .sponsor-logo-box {
+    width: 72px;
+    height: 72px;
+    border-radius: 16px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto 12px;
+  }
+
+  .sponsor-name {
+    font-size: 15px;
+    font-weight: 700;
+    color: var(--text);
+    margin-bottom: 4px;
+  }
+
+  .sponsor-type {
+    font-size: 12px;
+    color: var(--text-muted);
+    background: var(--orange-light);
+    display: inline-block;
+    padding: 2px 10px;
+    border-radius: 100px;
+    color: var(--orange-dark);
+  }
+
+  /* ===== MAP & FORMS ===== */
+  .map-form-section {
+    padding: 60px 0;
+    background: var(--bg);
+  }
+
+  .mf-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 32px;
+    align-items: start;
+  }
+
+  .map-placeholder {
+    background: #F1F5F9;
+    border-radius: var(--radius);
+    padding: 32px 24px;
+    text-align: center;
+    border: 2px dashed #CBD5E1;
+    min-height: 260px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+  }
+
+  .map-placeholder iframe {
+    width: 100%;
+    height: 260px;
+    border: none;
+    border-radius: var(--radius-sm);
+  }
+
+  .map-pin-icon { font-size: 36px; }
+
+  .map-placeholder-title {
+    font-size: 16px;
+    font-weight: 700;
+    color: #475569;
+  }
+
+  .map-placeholder-sub {
+    font-size: 14px;
+    color: #64748B;
+    line-height: 1.7;
+  }
+
+  .map-how {
+    margin-top: 12px;
+    background: #fff;
+    border-radius: 10px;
+    padding: 12px 16px;
+    text-align: left;
+    font-size: 13px;
+    color: #64748B;
+    width: 100%;
+  }
+
+  .map-how p { font-weight: 700; margin-bottom: 6px; color: #475569; }
+  .map-how ol { padding-left: 18px; }
+  .map-how li { margin-bottom: 4px; }
+
+  .form-card {
+    background: var(--card-bg);
+    border: 1.5px solid var(--border);
+    border-radius: var(--radius);
+    padding: 24px;
+  }
+
+  .form-card-head {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    margin-bottom: 18px;
+  }
+
+  .form-card-icon {
+    width: 48px;
+    height: 48px;
+    border-radius: 14px;
+    font-size: 22px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+  }
+
+  .form-card-title {
+    font-size: 16px;
+    font-weight: 700;
+    color: var(--text);
+  }
+
+  .form-card-sub {
+    font-size: 13px;
+    color: var(--text-muted);
+    margin-top: 2px;
+  }
+
+  .form-btn {
+    width: 100%;
+    justify-content: center;
+    text-decoration: none;
+  }
+
+  .form-note {
+    margin-top: 10px;
+    font-size: 12px;
+    color: var(--text-muted);
+    text-align: center;
+  }
+
+  @media (max-width: 768px) {
+    .mf-grid { grid-template-columns: 1fr; }
+    .sponsor-card { width: calc(50% - 8px); }
+  }
+
+  @media (max-width: 480px) {
+    .sponsor-card { width: 100%; }
+  }
+
+  /* ===== MODAL ===== */
+  .modal-overlay {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.5);
+    z-index: 200;
+    align-items: center;
+    justify-content: center;
+    padding: 24px;
+  }
+
+  .modal-overlay.open { display: flex; }
+
+  .modal {
+    background: #fff;
+    border-radius: 24px;
+    padding: 32px;
+    max-width: 480px;
+    width: 100%;
+    position: relative;
+    animation: modalIn 0.3s ease-out;
+  }
+
+  @keyframes modalIn {
+    from { opacity: 0; transform: scale(0.9) translateY(20px); }
+    to { opacity: 1; transform: scale(1) translateY(0); }
+  }
+
+  .modal-close {
+    position: absolute;
+    top: 16px; right: 16px;
+    background: var(--orange-light);
+    border: none;
+    border-radius: 50%;
+    width: 32px; height: 32px;
+    cursor: pointer;
+    font-size: 18px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--orange-dark);
+  }
+
+  .modal h3 { font-family: 'Kaisei Decol', serif; font-size: 22px; margin-bottom: 16px; }
+  .modal p { color: var(--text-muted); font-size: 15px; line-height: 1.7; }
+
+  /* ===== MOBILE NAV ===== */
+  .mobile-nav {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.5);
+    z-index: 99;
+  }
+
+  .mobile-nav.open { display: block; }
+
+  .mobile-nav-panel {
+    position: absolute;
+    top: 0; right: 0;
+    width: 260px;
+    height: 100%;
+    background: #fff;
+    padding: 80px 24px 24px;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  .mobile-nav-panel a {
+    display: block;
+    text-decoration: none;
+    color: var(--text);
+    font-size: 18px;
+    font-weight: 500;
+    padding: 12px 16px;
+    border-radius: 12px;
+    transition: background 0.2s;
+  }
+
+  .mobile-nav-panel a:hover { background: var(--orange-light); color: var(--orange-dark); }
+
+  /* ===== RESPONSIVE ===== */
+  @media (max-width: 768px) {
+    nav { display: none; }
+    .hamburger { display: flex; }
+
+    .next-event-card {
+      grid-template-columns: 1fr;
+      padding: 28px 24px;
+    }
+
+    .countdown-grid { grid-template-columns: repeat(4, 1fr); }
+    .countdown-item { min-width: unset; }
+
+    .info-grid { grid-template-columns: 1fr 1fr; }
+
+    .gallery-grid { grid-template-columns: repeat(2, 1fr); }
+    .gallery-item:nth-child(1) { grid-column: span 2; }
+
+    .volunteer-inner { grid-template-columns: 1fr; }
+    .volunteer-visual { grid-template-columns: repeat(4, 1fr); }
+
+    .footer-inner { grid-template-columns: 1fr; gap: 24px; }
+    .footer-bottom { flex-direction: column; gap: 8px; text-align: center; }
+  }
+
+  @media (max-width: 480px) {
+    .info-grid { grid-template-columns: 1fr; }
+    .gallery-grid { grid-template-columns: 1fr; }
+    .gallery-item:nth-child(1) { grid-column: span 1; aspect-ratio: 4/3; }
+    .volunteer-visual { grid-template-columns: 1fr 1fr; }
+  }
+</style>
+</head>
+<body>
+
+<!-- HEADER -->
+<header>
+  <div class="logo">
+    <div class="logo-icon">🌱</div>
+    <span class="logo-text">あいの芽</span>
+  </div>
+  <nav>
+    <a href="#next-event">次回開催</a>
+    <a href="#news">お知らせ</a>
+    <a href="#gallery">ギャラリー</a>
+    <a href="#about">食堂について</a>
+    <a href="#volunteer">ボランティア</a>
+  </nav>
+  <div class="hamburger" onclick="toggleMobileNav()">
+    <span></span><span></span><span></span>
+  </div>
+</header>
+
+<!-- MOBILE NAV -->
+<div class="mobile-nav" id="mobileNav" onclick="closeMobileNav(event)">
+  <div class="mobile-nav-panel">
+    <a href="#next-event" onclick="closeMobileNavDirect()">🗓 次回開催</a>
+    <a href="#news" onclick="closeMobileNavDirect()">📢 お知らせ</a>
+    <a href="#gallery" onclick="closeMobileNavDirect()">📷 ギャラリー</a>
+    <a href="#about" onclick="closeMobileNavDirect()">🍳 食堂について</a>
+    <a href="#volunteer" onclick="closeMobileNavDirect()">🤝 ボランティア</a>
+  </div>
+</div>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-bubbles">
+    <div class="bubble"></div>
+    <div class="bubble"></div>
+    <div class="bubble"></div>
+    <div class="bubble"></div>
+  </div>
+  <div class="hero-badge">🌱 地域みんなで子どもを育てよう</div>
+  <h1>おかえり、<span class="accent">ただいま</span>の<br>場所がここに。</h1>
+  <p>あいの芽は、子どもたちが温かいご飯を食べながら笑顔になれる、地域のみんなの食卓です。</p>
+</section>
+
+<!-- NEXT EVENT -->
+<section id="next-event" class="next-event-section">
+  <div class="next-event-card">
+    <div>
+      <div class="event-label">▶ NEXT EVENT · 次回開催</div>
+      <!-- ★ 毎月ここを更新してください ★ -->
+      <div class="event-date-main" id="eventDateDisplay">2025年2月15日（土）</div>
+      <div class="event-details">
+        <div class="event-chip">🕐 11:00〜14:00</div>
+        <div class="event-chip">📍 ○○コミュニティセンター 2F</div>
+        <div class="event-chip">🍱 無料（子ども）・300円（大人）</div>
+      </div>
+    </div>
+    <div class="countdown-box">
+      <div class="countdown-grid">
+        <div class="countdown-item">
+          <div class="countdown-num" id="days">--</div>
+          <div class="countdown-unit">日</div>
+        </div>
+        <div class="countdown-item">
+          <div class="countdown-num" id="hours">--</div>
+          <div class="countdown-unit">時間</div>
+        </div>
+        <div class="countdown-item">
+          <div class="countdown-num" id="minutes">--</div>
+          <div class="countdown-unit">分</div>
+        </div>
+        <div class="countdown-item">
+          <div class="countdown-num" id="seconds">--</div>
+          <div class="countdown-unit">秒</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- NEWS -->
+<section id="news" class="news-section">
+  <div class="news-inner">
+    <div class="section-header">
+      <div class="section-tag">📢 NEWS</div>
+      <h2 class="section-title">お知らせ</h2>
+    </div>
+    <!-- ★ 毎月お知らせを追加してください（古いものは下へ） ★ -->
+    <div class="news-list">
+      <div class="news-item">
+        <span class="news-date">2025.01.20</span>
+        <span class="news-badge badge-new">NEW</span>
+        <span class="news-text">2月の開催日程が決まりました。2月15日（土）11時〜14時、コミュニティセンター2Fにて開催します。</span>
+      </div>
+      <div class="news-item">
+        <span class="news-date">2025.01.10</span>
+        <span class="news-badge badge-event">イベント</span>
+        <span class="news-text">1月の食堂では、お正月特別メニューとして、みんなでお雑煮を作りました！子ども12人・大人20人が参加しました。</span>
+      </div>
+      <div class="news-item">
+        <span class="news-date">2024.12.20</span>
+        <span class="news-badge badge-event">イベント</span>
+        <span class="news-text">クリスマス特別メニューを実施。地元のパン屋さんからケーキの寄付をいただきました。ありがとうございました！</span>
+      </div>
+      <div class="news-item">
+        <span class="news-date">2024.12.01</span>
+        <span class="news-badge badge-info">お知らせ</span>
+        <span class="news-text">食材の寄付を受け付けています。お米・缶詰・乾物など長期保存できる食材を歓迎しています。詳しくはお電話にて。</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- GALLERY -->
+<section id="gallery" class="section">
+  <div class="section-header">
+    <div class="section-tag">📷 GALLERY</div>
+    <h2 class="section-title">活動ギャラリー</h2>
+  </div>
+  <!-- ★ 写真は <img src="your-photo.jpg"> に差し替えてください ★ -->
+  <div class="gallery-grid">
+    <div class="gallery-item" onclick="openModal('gallery1')">
+      <div class="gallery-placeholder" style="background:#FFF7ED;">
+        <span class="icon">🍛</span>
+        <span class="label">みんなで料理</span>
+      </div>
+      <div class="gallery-overlay"></div>
+    </div>
+    <div class="gallery-item" onclick="openModal('gallery2')">
+      <div class="gallery-placeholder" style="background:#ECFDF5;">
+        <span class="icon">😊</span>
+        <span class="label">子どもの笑顔</span>
+      </div>
+      <div class="gallery-overlay"></div>
+    </div>
+    <div class="gallery-item" onclick="openModal('gallery3')">
+      <div class="gallery-placeholder" style="background:#F0F9FF;">
+        <span class="icon">🥗</span>
+        <span class="label">今月のメニュー</span>
+      </div>
+      <div class="gallery-overlay"></div>
+    </div>
+    <div class="gallery-item" onclick="openModal('gallery4')">
+      <div class="gallery-placeholder" style="background:#FDF4FF;">
+        <span class="icon">👨‍🍳</span>
+        <span class="label">ボランティアさん</span>
+      </div>
+      <div class="gallery-overlay"></div>
+    </div>
+    <div class="gallery-item" onclick="openModal('gallery5')">
+      <div class="gallery-placeholder" style="background:#FFFBEB;">
+        <span class="icon">🎨</span>
+        <span class="label">お絵かきコーナー</span>
+      </div>
+      <div class="gallery-overlay"></div>
+    </div>
+  </div>
+  <p style="text-align:center; margin-top:20px; color:var(--text-muted); font-size:14px;">※ 写真掲載は保護者の同意を得ております</p>
+</section>
+
+<!-- ABOUT -->
+<section id="about" class="section" style="padding-top:0;">
+  <div class="section-header">
+    <div class="section-tag">🍳 ABOUT</div>
+    <h2 class="section-title">食堂について</h2>
+  </div>
+  <div class="info-grid">
+    <div class="info-card">
+      <span class="info-icon">📅</span>
+      <h3>開催スケジュール</h3>
+      <p>毎月第3土曜日<br>11:00〜14:00<br>（祝日は変更あり）</p>
+    </div>
+    <div class="info-card">
+      <span class="info-icon">💰</span>
+      <h3>参加費</h3>
+      <p>子ども（18歳以下）<br><strong style="color:var(--orange);">無料</strong><br>大人 300円</p>
+    </div>
+    <div class="info-card">
+      <span class="info-icon">📍</span>
+      <h3>場所</h3>
+      <p>○○コミュニティセンター<br>2F 調理実習室<br>（最寄駅 ○○駅 徒歩5分）</p>
+    </div>
+    <div class="info-card">
+      <span class="info-icon">📞</span>
+      <h3>お問い合わせ</h3>
+      <p>TEL: 000-000-0000<br>受付 平日10〜17時<br>（担当：○○）</p>
+    </div>
+    <div class="info-card">
+      <span class="info-icon">🍱</span>
+      <h3>メニュー</h3>
+      <p>旬の食材を使った<br>手作りの定食<br>（アレルギー要相談）</p>
+    </div>
+    <div class="info-card">
+      <span class="info-icon">🤲</span>
+      <h3>支援方法</h3>
+      <p>食材寄付・金銭寄付<br>ボランティア参加<br>どれも大歓迎！</p>
+    </div>
+  </div>
+</section>
+
+<!-- SPONSORS -->
+<section id="sponsors" class="sponsors-section">
+  <div class="section-inner">
+    <div class="section-header">
+      <div class="section-tag">🤝 SUPPORTERS</div>
+      <h2 class="section-title">協賛・協力</h2>
+    </div>
+    <p style="text-align:center; color:var(--text-muted); font-size:14px; margin-bottom:32px;">あいの芽の活動を支えてくださっている皆さまです。</p>
+    <!-- ★ 協賛企業・団体はここに追加してください ★ -->
+    <div class="sponsor-grid">
+      <div class="sponsor-card">
+        <div class="sponsor-logo-box" style="background:#EFF6FF;">
+          <span style="font-size:28px; font-weight:700; color:#1D4ED8;">A</span>
+        </div>
+        <div class="sponsor-name">A株式会社</div>
+        <div class="sponsor-type">食材協賛</div>
+      </div>
+      <div class="sponsor-card">
+        <div class="sponsor-logo-box" style="background:#F0FDF4;">
+          <span style="font-size:28px; font-weight:700; color:#15803D;">B</span>
+        </div>
+        <div class="sponsor-name">B施設</div>
+        <div class="sponsor-type">会場提供</div>
+      </div>
+      <div class="sponsor-card sponsor-add">
+        <div class="sponsor-logo-box" style="background:#F9FAFB; border:2px dashed #D1D5DB;">
+          <span style="font-size:28px; color:#9CA3AF;">＋</span>
+        </div>
+        <div class="sponsor-name" style="color:#9CA3AF;">協賛募集中</div>
+        <div class="sponsor-type" style="color:#D1D5DB;">お気軽にご相談ください</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- MAP & FORMS -->
+<section id="apply" class="map-form-section">
+  <div class="section-inner">
+    <div class="mf-grid">
+
+      <!-- MAP -->
+      <div class="mf-block">
+        <div class="section-header" style="text-align:left; margin-bottom:20px;">
+          <div class="section-tag">📍 ACCESS</div>
+          <h2 class="section-title" style="font-size:24px;">アクセス</h2>
+        </div>
+        <!-- ★ 本番ではGoogleマップの埋め込みコードをここに貼り付けてください ★
+             手順: Googleマップ → 場所を検索 → 共有 → 地図を埋め込む → HTMLをコピー
+        -->
+        <div class="map-placeholder">
+          <div class="map-pin-icon">📍</div>
+          <p class="map-placeholder-title">Googleマップをここに表示</p>
+          <p class="map-placeholder-sub">○○コミュニティセンター 2F<br>〒000-0000 ○○市○○町1-2-3<br>最寄駅：○○駅 徒歩5分</p>
+          <div class="map-how">
+            <p>【実際の地図に変える方法】</p>
+            <ol>
+              <li>Googleマップで場所を検索</li>
+              <li>「共有」→「地図を埋め込む」</li>
+              <li>表示されたHTMLをこの枠に貼るだけ</li>
+            </ol>
+          </div>
+        </div>
+      </div>
+
+      <!-- FORMS -->
+      <div class="mf-block">
+        <div class="section-header" style="text-align:left; margin-bottom:20px;">
+          <div class="section-tag">📝 APPLY</div>
+          <h2 class="section-title" style="font-size:24px;">申し込み・登録</h2>
+        </div>
+
+        <!-- 参加申し込み -->
+        <div class="form-card" style="margin-bottom:16px;">
+          <div class="form-card-head">
+            <span class="form-card-icon" style="background:#FFF7ED; color:var(--orange-dark);">🍱</span>
+            <div>
+              <div class="form-card-title">参加申し込み</div>
+              <div class="form-card-sub">食事に参加したい方はこちら</div>
+            </div>
+          </div>
+          <!-- ★ Googleフォームの埋め込みコード、またはリンクをここに設定 ★
+               手順: Googleフォーム作成 → 送信 → 埋め込み or リンクをコピー
+          -->
+          <a href="#" class="btn btn-primary form-btn" onclick="alert('Googleフォームのリンクをここに設定してください')">申し込みフォームへ →</a>
+          <p class="form-note">※ Googleフォームで受付（無料・アカウント不要）</p>
+        </div>
+
+        <!-- ボランティア登録 -->
+        <div class="form-card">
+          <div class="form-card-head">
+            <span class="form-card-icon" style="background:#ECFDF5; color:var(--green-dark);">🤝</span>
+            <div>
+              <div class="form-card-title">ボランティア登録</div>
+              <div class="form-card-sub">一緒に運営したい方はこちら</div>
+            </div>
+          </div>
+          <a href="#" class="btn btn-secondary form-btn" onclick="alert('Googleフォームのリンクをここに設定してください')" style="justify-content:center;">登録フォームへ →</a>
+          <p class="form-note">※ 調理・片付け・子どもの遊び相手など、できることだけでOK</p>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- VOLUNTEER -->
+<section id="volunteer" class="volunteer-section">
+  <div class="volunteer-inner">
+    <div class="volunteer-content">
+      <h2>いっしょに<br>作りませんか？</h2>
+      <p>料理・片付け・子どもの遊び相手など、できることから参加できます。特別なスキルは一切不要です。</p>
+      <div style="display:flex; gap:12px; flex-wrap:wrap;">
+        <a href="#" class="btn btn-secondary">ボランティア登録</a>
+        <a href="#" class="btn btn-secondary" style="border-color:var(--orange); color:var(--orange-dark);">食材を寄付する</a>
+      </div>
+    </div>
+    <div class="volunteer-visual">
+      <div class="vol-stat">
+        <div class="vol-stat-num">42</div>
+        <div class="vol-stat-label">登録ボランティア</div>
+      </div>
+      <div class="vol-stat">
+        <div class="vol-stat-num">230</div>
+        <div class="vol-stat-label">延べ参加児童数</div>
+      </div>
+      <div class="vol-stat">
+        <div class="vol-stat-num">36</div>
+        <div class="vol-stat-label">開催回数</div>
+      </div>
+      <div class="vol-stat">
+        <div class="vol-stat-num">15</div>
+        <div class="vol-stat-label">協力団体数</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-inner">
+    <div class="footer-brand">
+      <span class="logo-text">🌱 あいの芽</span>
+      <p>子どもたちの「おなかいっぱい」と「また来たい」を届けます。地域のみなさまのご支援で運営しています。</p>
+    </div>
+    <div class="footer-col">
+      <h4>メニュー</h4>
+      <a href="#next-event">次回開催</a>
+      <a href="#news">お知らせ</a>
+      <a href="#gallery">ギャラリー</a>
+      <a href="#about">食堂について</a>
+      <a href="#sponsors">協賛・協力</a>
+    </div>
+    <div class="footer-col">
+      <h4>サポート</h4>
+      <a href="#apply">参加申し込み</a>
+      <a href="#volunteer">ボランティア</a>
+      <a href="#">食材寄付</a>
+      <a href="#">プライバシー</a>
+      <a href="#">お問い合わせ</a>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <span>© 2025 あいの芽 All Rights Reserved.</span>
+    <span>運営：○○子どもの食卓実行委員会</span>
+  </div>
+</footer>
+
+<!-- MODAL -->
+<div class="modal-overlay" id="modalOverlay" onclick="closeModalOutside(event)">
+  <div class="modal">
+    <button class="modal-close" onclick="closeModal()">✕</button>
+    <h3 id="modalTitle">写真</h3>
+    <div id="modalContent" style="margin-top:12px;"></div>
+  </div>
+</div>
+
+<script>
+  // ===== 次回開催日時の設定（毎月ここを変更） =====
+  // 形式: new Date('YYYY-MM-DDTHH:MM:SS')
+  const nextEventDate = new Date('2025-02-15T11:00:00');
+
+  function updateCountdown() {
+    const now = new Date();
+    const diff = nextEventDate - now;
+
+    if (diff <= 0) {
+      document.getElementById('days').textContent = '0';
+      document.getElementById('hours').textContent = '0';
+      document.getElementById('minutes').textContent = '0';
+      document.getElementById('seconds').textContent = '0';
+      return;
+    }
+
+    const d = Math.floor(diff / (1000 * 60 * 60 * 24));
+    const h = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+    const m = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+    const s = Math.floor((diff % (1000 * 60)) / 1000);
+
+    document.getElementById('days').textContent = d;
+    document.getElementById('hours').textContent = String(h).padStart(2, '0');
+    document.getElementById('minutes').textContent = String(m).padStart(2, '0');
+    document.getElementById('seconds').textContent = String(s).padStart(2, '0');
+  }
+
+  setInterval(updateCountdown, 1000);
+  updateCountdown();
+
+  // ===== モバイルナビ =====
+  function toggleMobileNav() {
+    document.getElementById('mobileNav').classList.toggle('open');
+  }
+
+  function closeMobileNav(e) {
+    if (e.target === document.getElementById('mobileNav')) {
+      document.getElementById('mobileNav').classList.remove('open');
+    }
+  }
+
+  function closeMobileNavDirect() {
+    document.getElementById('mobileNav').classList.remove('open');
+  }
+
+  // ===== モーダル =====
+  const galleryData = {
+    gallery1: { title: '🍛 みんなで料理', desc: '子どもたちも一緒に料理のお手伝い。今月はカレーライスを作りました！' },
+    gallery2: { title: '😊 子どもの笑顔', desc: '「おいしい！」の声があふれた楽しい時間。' },
+    gallery3: { title: '🥗 今月のメニュー', desc: '旬の野菜をたっぷり使ったバランスのよい定食です。' },
+    gallery4: { title: '👨‍🍳 ボランティアさん', desc: '今日も素敵なボランティアの皆さんが来てくれました。' },
+    gallery5: { title: '🎨 お絵かきコーナー', desc: 'ご飯の後は自由時間。子どもたちが元気に遊んでいます。' },
+  };
+
+  function openModal(id) {
+    const data = galleryData[id];
+    document.getElementById('modalTitle').textContent = data.title;
+    document.getElementById('modalContent').innerHTML = `<p style="color:var(--text-muted); font-size:15px;">${data.desc}</p><div style="margin-top:16px; background:var(--orange-light); border-radius:12px; height:180px; display:flex; align-items:center; justify-content:center; font-size:48px;">${data.title.split(' ')[0]}</div>`;
+    document.getElementById('modalOverlay').classList.add('open');
+  }
+
+  function closeModal() {
+    document.getElementById('modalOverlay').classList.remove('open');
+  }
+
+  function closeModalOutside(e) {
+    if (e.target === document.getElementById('modalOverlay')) closeModal();
+  }
+
+  // ===== スムーズスクロール =====
+  document.querySelectorAll('a[href^="#"]').forEach(a => {
+    a.addEventListener('click', e => {
+      const target = document.querySelector(a.getAttribute('href'));
+      if (target) {
+        e.preventDefault();
+        target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      }
+    });
+  });
+</script>
+</body>
+</html>
